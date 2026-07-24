@@ -63,6 +63,55 @@ elements.Fn('assert.canon', function(context)
         violations.push(...this.Fn('assert.styles', pair, styles, hash, wrapper));
     };
 
+    this.defaults = () =>
+    {
+        const config = this.field('config');
+
+        if(!config || config.type !== 'ObjectExpression')
+        {
+            return;
+        }
+
+        for(const property of config.properties)
+        {
+            this.spilled(property);
+        }
+    };
+
+    this.rows = (value) =>
+    {
+        return value.value.elements.filter((element) => element.type === 'ObjectExpression');
+    };
+
+    this.spilled = (property) =>
+    {
+        if(property.value.type !== 'ObjectExpression')
+        {
+            return;
+        }
+
+        const value = property.value.properties.find((entry) => entry.key.name === 'value');
+        if(!value || value.value.type !== 'ArrayExpression')
+        {
+            return;
+        }
+
+        const rows = this.rows(value);
+
+        if(rows.length >= 2)
+        {
+            const message = 'The default of ' + property.key.name + ' carries ' + rows.length
+                + ' demo rows, value holds the real default and the show lives in example.';
+
+            violations.push({
+                rule: 'element',
+                file: context.file,
+                line: value.value.loc.start.line,
+                message: message
+            });
+        }
+    };
+
     this.check = () =>
     {
         const identifier = this.field('id');
@@ -81,6 +130,8 @@ elements.Fn('assert.canon', function(context)
         {
             return;
         }
+
+        this.defaults();
 
         violations.push(...this.Fn('assert.bindings', context.file, result.markup.expressions, render, this.properties()));
 
