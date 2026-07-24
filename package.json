@@ -1,0 +1,13 @@
+{
+    "name": "@onetype/addon-elements",
+    "version": "0.1.0",
+    "type": "module",
+    "imports": {
+        "#elements/*": "./*"
+    },
+    "exports": {
+        ".": "./back/load.js",
+        "./*": "./*"
+    },
+    "main": "./back/load.js"
+}
