@@ -1,0 +1,10 @@
+{
+    "type": "addon",
+    "slug": "onetype/addon/elements",
+    "name": "Elements",
+    "description": "Front element registry and rendering engine, with builtin make/get helper functions for badges, chips, dates, currency, media and other display primitives.",
+    "icon": "widgets",
+    "color": "rgba(129, 140, 248, 1)",
+    "status": "enabled",
+    "depends": []
+}
