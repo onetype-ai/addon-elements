@@ -32,7 +32,9 @@ onetype.AddonReady('elements', (elements) =>
 // This file is part of OneType. Created and led by Dejan Tomic <hi@iamdejan.com>, co-authored by Stefan Pakic, onetype.ai
 ```
 - The `.css` beside it is optional, but when it exists it must carry the same name, and a `.css` without its `.js` twin fails the sweep.
-- Field order is law: `id`, `addon`, `icon`, `name`, `description`, `config`, `metadata`, `example`, `render`, then lifecycle hooks. Every config property is a full define with a `type`, a `description` and its default in `value:`, defaults never live in code. An `array` define names what it holds through `each` (itself a define with a `type` and a `description`; rows of free shape are `type: 'json'`), an `object` define names its shape through `config` or declares itself `json`. The optional `example` field is an array of property sets for previews. Identifiers everywhere carry at least three letters, `one` and `two` over `a` and `b`. Default data spells its rows riding the brackets:
+- Field order is law: `id`, `addon`, `icon`, `name`, `description`, `config`, `metadata`, `example`, `render`, then lifecycle hooks. Every config property is a full define with a `type`, a `description` and its default in `value:`, defaults never live in code. An `array` define names what it holds through `each`. When the shape of a row is known, and it almost always is, `each` is a real `object` define with its own `config` describing every field; `type: 'json'` is reserved for rows that are genuinely free-form. An `object` define follows the same law, `config` when the shape is known, `json` when it is not.
+
+Defaults in `value:` are REAL defaults, what the element means when nobody passes anything: an empty array, an empty string, a sensible number. Demo rows never live in `value:`; showcase data belongs to `example`, the array of property sets a gallery previews the element with. The optional `example` field is that showcase. Identifiers everywhere carry at least three letters, `one` and `two` over `a` and `b`. Default data spells its rows riding the brackets:
 
 ```js
 value: [{
