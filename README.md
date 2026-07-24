@@ -49,6 +49,25 @@ each: {
 ```
 - Data arrays spell their rows riding the brackets, `[{` ... `}, {` ... `}]`, one field per line inside.
 
+## Composition and naming
+
+An element renders anywhere as its tag, `e-` + the id: `id: 'lab-sidebar'` mounts as `<e-lab-sidebar>`, from markup or from another element's render. Ids carry their addon as a prefix (`lab-sidebar`, `admin-core-field`) so two addons never clash; the file beside keeps the short tail (`sidebar/sidebar.js`). The `addon` field is a label naming the owner, nothing needs registering anywhere else for an element to exist.
+
+When a static class and `:class` meet on one node, the static part holds what is always there and `:class` holds only what changes: `class="link" :class="active === item.id ? 'on' : ''"`. Repeating the static name inside the `:class` string is waste, the classes merge.
+
+The `example` field, when present, is an array of property sets a gallery can preview the element with:
+
+```js
+example: [{
+    title: 'First post',
+    count: 4
+}]
+```
+
+## The canon in short
+
+The linter holds every file to laws the render does not show: a line stops at 160 characters and a file at 160 lines, a function tells its story in fifteen own lines and decomposes into named steps on `this`, names carry at least three letters, one statement per line, every brace opens on its own line, comments do not exist beyond the banner, inline `||`/`&&` fallbacks in value position open their own line instead, data arrays ride their brackets. When the linter speaks, its message is the law; checking a `.css` runs the checks of the `.js` beside it.
+
 ## The render and its css
 
 The render returns exactly one template literal of pure html:
@@ -59,11 +78,12 @@ The render returns exactly one template literal of pure html:
 - classes are one lowercase word up to ten characters, like `box`, `card`, `title`; dynamic classes build ONE string through `:class="'card ' + tone"`, an object form does not exist;
 - every static class must appear in the css beside, an unstyled class is a violation.
 
-The css is scoped by the hash of the element. The engine stamps class `e-<hash>` on the wrapper tag, where `hash = GenerateHash('elements-' + id)`:
+The css is scoped by the hash of the element. The engine stamps class `e-<hash>` on the wrapper tag, where `hash = GenerateHash('elements-' + id)`. Compute it with this exact line, replacing the id:
 
-```js
-GenerateHash(name) { let h = 0; for(i of name) { h = (h << 5) - h + code(i); h |= 0; } return Math.abs(h).toString(16); }
 ```
+node -e "const n='elements-post-card';let h=0;for(let i=0;i<n.length;i++){h=(h<<5)-h+n.charCodeAt(i);h|=0;}console.log('e-'+Math.abs(h).toString(16))"
+```
+
 
 Every selector opens with that class and walks down with `>` only:
 
