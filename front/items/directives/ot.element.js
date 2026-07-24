@@ -133,7 +133,7 @@ onetype.AddonReady('directives', function(directives)
 
             const name = node.tagName.toLowerCase().substring(2);
 
-            if(!onetype.Addon('elements').FnGet('render.' + name))
+            if(!elements.FnGet('render.' + name))
             {
                 return this.fail(name);
             }
@@ -141,7 +141,7 @@ onetype.AddonReady('directives', function(directives)
             const attributes = this.attributes();
             const slots = this.slots();
             const key = this.key(attributes);
-            const render = onetype.Addon('elements').Render(name, attributes.data, attributes.wrapper, slots);
+            const render = elements.Render(name, attributes.data, attributes.wrapper, slots);
 
             this.mount(name, render, key, attributes.data);
         }
