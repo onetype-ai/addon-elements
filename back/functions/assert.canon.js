@@ -83,6 +83,19 @@ elements.Fn('assert.canon', function(context)
         return value.value.elements.filter((element) => element.type === 'ObjectExpression');
     };
 
+    this.loud = (property, value, rows) =>
+    {
+        const message = 'The default of ' + property.key.name + ' carries ' + rows.length
+            + ' demo rows, value holds the real default and the show lives in example.';
+
+        violations.push({
+            rule: 'element',
+            file: context.file,
+            line: value.value.loc.start.line,
+            message: message
+        });
+    };
+
     this.spilled = (property) =>
     {
         if(property.value.type !== 'ObjectExpression')
@@ -91,6 +104,7 @@ elements.Fn('assert.canon', function(context)
         }
 
         const value = property.value.properties.find((entry) => entry.key.name === 'value');
+
         if(!value || value.value.type !== 'ArrayExpression')
         {
             return;
@@ -100,15 +114,7 @@ elements.Fn('assert.canon', function(context)
 
         if(rows.length >= 2)
         {
-            const message = 'The default of ' + property.key.name + ' carries ' + rows.length
-                + ' demo rows, value holds the real default and the show lives in example.';
-
-            violations.push({
-                rule: 'element',
-                file: context.file,
-                line: value.value.loc.start.line,
-                message: message
-            });
+            this.loud(property, value, rows);
         }
     };
 
