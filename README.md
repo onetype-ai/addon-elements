@@ -6,6 +6,78 @@ Elements is the front element registry and rendering engine of OneType. An eleme
 - Depends on: nothing. Supports: `onetype/addon/directives` (the `e-` tag markup syntax and the lifecycle observers activate with it) and `onetype/addon/canon` (pattern and placement items activate when canon is present).
 - Sides: `front/` (the engine), `back/` (ships the bundle)
 
+## Files and the canon
+
+An element lives as a pair of files in its addon, one folder per element or one folder per group:
+
+```
+front/items/elements/post-card/card.js
+front/items/elements/post-card/card.css
+front/items/elements/forms/input.js
+front/items/elements/forms/input.css
+```
+
+- The `.js` file holds exactly one registration, wrapped in `AddonReady`, nothing else:
+
+```js
+onetype.AddonReady('elements', (elements) =>
+{
+    elements.Item({ ... });
+});
+```
+
+- Every `.js` file opens with exactly this banner on line 1, and no other comment anywhere. The `.css` file carries no banner and no `//` lines, css comments are `/* */`:
+
+```
+// This file is part of OneType. Created and led by Dejan Tomic <hi@iamdejan.com>, co-authored by Stefan Pakic, onetype.ai
+```
+- The `.css` beside it is optional, but when it exists it must carry the same name, and a `.css` without its `.js` twin fails the sweep.
+- Field order is law: `id`, `addon`, `icon`, `name`, `description`, `config`, `metadata`, `example`, `render`, then lifecycle hooks. Every config property is a full define with a `type`, a `description` and its default in `value:`, defaults never live in code. An `array` define names what it holds through `each` (itself a define with a `type` and a `description`; rows of free shape are `type: 'json'`), an `object` define names its shape through `config` or declares itself `json`. The optional `example` field is an array of property sets for previews. Identifiers everywhere carry at least three letters, `one` and `two` over `a` and `b`. Default data spells its rows riding the brackets:
+
+```js
+value: [{
+    id: 'first',
+    label: 'First'
+}, {
+    id: 'second',
+    label: 'Second'
+}],
+each: {
+    type: 'json',
+    description: 'One row, an id and a label.'
+}
+```
+- Data arrays spell their rows riding the brackets, `[{` ... `}, {` ... `}]`, one field per line inside.
+
+## The render and its css
+
+The render returns exactly one template literal of pure html:
+
+- no `${}` ever, state binds through `{{ }}`, `:attribute` and `ot-*` directives;
+- exactly one root element;
+- no `<script>`, no `<style>`, no inline `style=""`; a truly dynamic value may ride `:style` (a progress width, a computed color), but a constant `:style` is a violation, fixed looks live in classes;
+- classes are one lowercase word up to ten characters, like `box`, `card`, `title`;
+- every static class must appear in the css beside, an unstyled class is a violation.
+
+The css is scoped by the hash of the element. The engine stamps class `e-<hash>` on the wrapper tag, where `hash = GenerateHash('elements-' + id)`:
+
+```js
+GenerateHash(name) { let h = 0; for(i of name) { h = (h << 5) - h + code(i); h |= 0; } return Math.abs(h).toString(16); }
+```
+
+Every selector opens with that class and walks down with `>` only:
+
+```css
+.e-561166d2 > .box > .card { }
+.e-561166d2 > .box > .card:hover { }
+```
+
+- only `>` between steps, never a space, `+` or `~`;
+- every step opens with a class, never a bare tag, an id or `*`;
+- the walked structure must exist in the template, a selector into markup the render does not build is a violation;
+- no `!important`, no `@import`, of the at-rules only `@media` may appear;
+- content injected at runtime through `ot-html` or `ot-node` styles itself, the css of the element cannot reach below such a node.
+
 ## Define an element
 
 ```js
