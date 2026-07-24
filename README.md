@@ -3,7 +3,7 @@
 Elements is the front element registry and rendering engine of OneType. An element is a named render function with typed properties: registered once, it renders anywhere, from markup as an `e-` tag, from code, or from another element. No virtual DOM, no hooks: assign to `this` and the DOM patches itself.
 
 - Package: `@onetype/addon-elements`, slug `onetype/addon/elements`
-- Depends on: nothing. The `e-` tag markup syntax activates when the directives addon is present.
+- Depends on: nothing. Supports: `onetype/addon/directives` (the `e-` tag markup syntax and the lifecycle observers activate with it) and `onetype/addon/canon` (pattern and placement items activate when canon is present).
 - Sides: `front/` (the engine), `back/` (ships the bundle)
 
 ## Define an element

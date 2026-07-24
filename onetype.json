@@ -6,5 +6,9 @@
     "icon": "widgets",
     "color": "rgba(129, 140, 248, 1)",
     "status": "enabled",
-    "depends": []
+    "depends": [],
+    "supports": [
+        "onetype/addon/canon",
+        "onetype/addon/directives"
+    ]
 }
