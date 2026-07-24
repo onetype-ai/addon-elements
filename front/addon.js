@@ -31,24 +31,6 @@ const elements = onetype.Addon('elements', (addon) =>
         description: 'What the element renders, one sentence.'
     });
 
-    addon.Field('category', {
-        type: 'string',
-        value: '',
-        description: 'The category the element files under.'
-    });
-
-    addon.Field('author', {
-        type: 'string',
-        value: '',
-        description: 'Who made the element.'
-    });
-
-    addon.Field('collection', {
-        type: 'string',
-        value: '',
-        description: 'The collection the element ships with.'
-    });
-
     addon.Field('config', {
         type: 'json',
         value: {},
