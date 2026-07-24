@@ -20,7 +20,10 @@ elements.Fn('get.slots', function(node, item, compile)
 
         slots[name] = {
             html: child.outerHTML,
-            context: () => Object.assign({}, item ? item.GetData() : {}, compile.data)
+            context: () =>
+            {
+                return Object.assign({}, item ? item.GetData() : {}, compile.data);
+            }
         };
     };
 
