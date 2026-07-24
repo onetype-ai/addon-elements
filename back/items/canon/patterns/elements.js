@@ -1,5 +1,7 @@
 // This file is part of OneType. Created and led by Dejan Tomic <hi@iamdejan.com>, co-authored by Stefan Pakic, onetype.ai
 
+import elements from '#elements/back/addon.js';
+
 onetype.AddonReady('canon.patterns', (patterns) =>
 {
     patterns.Item({
@@ -8,6 +10,10 @@ onetype.AddonReady('canon.patterns', (patterns) =>
         match: '/items/elements/[^/]+(?:/[^/]+)?\\.js$',
         claims: '/items/elements/',
         pattern: 'onetype.AddonReady(\'elements\', (elements) =>\n{\n    elements.Item({ __fields__ });\n});',
+        assert: (context) =>
+        {
+            return elements.Fn('assert.canon', context);
+        },
         fields: {
             id: {
                 type: 'string',
@@ -34,11 +40,11 @@ onetype.AddonReady('canon.patterns', (patterns) =>
                 description: 'What the element renders, one sentence.'
             },
             config: {
-                type: 'json',
+                type: 'object',
                 description: 'Defines of the element properties, one define per property.'
             },
             metadata: {
-                type: 'json',
+                type: 'object',
                 description: 'Free tags for whoever wants them.'
             },
             example: {
