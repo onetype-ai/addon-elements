@@ -26,3 +26,7 @@ Support functions: `make.format.number`, `make.format.date`, `make.format.curren
 ### Consumers
 
 None at removal time. The admin grid (`packages/admin` table fields) has its own field rendering and is the natural first consumer of the future addon.
+
+## get.source moved to admin (Jul 24 2026)
+
+The searchable option source helper (`get.source`: debounced search, resolve of preselected values, label cache on the render) moved to `packages/admin` as `admin.Fn(&#x27;get.source&#x27;)`, since its only consumers are the admin form fields (select, input, tags, transfer). If a second package ever needs it, it graduates into the ui package.

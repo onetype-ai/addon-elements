@@ -79,10 +79,6 @@ document.body.appendChild(render.Element);
 
 Templates speak the directives vocabulary: `{{ value }}` interpolation, `ot-if`, `ot-for`, `ot-click` and the rest, `:attribute` binding, `<slot name>` insertion. When state changes, only the parts that differ re-render; focus, scroll and input state survive.
 
-## Dynamic option sources
-
-`elements.Fn('get.source', render, callback)` wires a render instance to a searchable option source: `render.search(query)` debounced fetching, `render.resolve(values)` backfills labels for preselected values, `render.find(value)` answers from the cache, `render.loading` and `render.results` ride the state. The callback receives `(query, 'search')` or `(values, 'selected')` and returns options; a failure lands in `render.failure` and the list stays empty.
-
 ## Guarantees
 
 - Properties are typed and validated through defines, the schema carries the defaults.
