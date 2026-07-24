@@ -13,11 +13,6 @@ onetype.AddonReady('directives', function(directives)
         type: '1',
         code: function(data, compile, node)
         {
-            if(!node.tagName || !node.tagName.toLowerCase().startsWith('e-') || node.tagName.toLowerCase() === 'e-bind')
-            {
-                return;
-            }
-
             this.mount = (name, inputs, render) =>
             {
                 render.Element.__otExternal = {
@@ -29,6 +24,11 @@ onetype.AddonReady('directives', function(directives)
 
                 node.replaceWith(render.Element);
             };
+
+            if(!node.tagName || !node.tagName.toLowerCase().startsWith('e-') || node.tagName.toLowerCase() === 'e-bind')
+            {
+                return;
+            }
 
             const name = node.tagName.toLowerCase().substring(2);
 
