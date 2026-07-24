@@ -5,6 +5,7 @@ elements.ItemOn('add', (item) =>
     elements.RenderAdd(item.Get('id'), function()
     {
         this.Define(item.Get('config'));
+        elements.Fn('do.observe', this, item);
 
         return item.Get('render').call(this);
     });

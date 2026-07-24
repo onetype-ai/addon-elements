@@ -75,4 +75,34 @@ const elements = onetype.Addon('elements', (addon) =>
         type: 'function',
         description: 'Renders the element, assigns state onto this and returns the template.'
     });
+
+    addon.Field('visible', {
+        type: 'function',
+        description: 'Runs when the element enters or leaves the viewport, the render rides this.'
+    });
+
+    addon.Field('resize', {
+        type: 'function',
+        description: 'Runs when the element resizes.'
+    });
+
+    addon.Field('click', {
+        type: 'function',
+        description: 'Runs when the element is clicked, the coordinates arrive first.'
+    });
+
+    addon.Field('scroll', {
+        type: 'function',
+        description: 'Runs as the element scrolls through the viewport, the progress arrives first.'
+    });
+
+    addon.Field('hover', {
+        type: 'function',
+        description: 'Runs as the pointer enters, moves over and leaves the element.'
+    });
+
+    addon.Field('destroy', {
+        type: 'function',
+        description: 'Runs when the element leaves the document, after the observers are released.'
+    });
 });
