@@ -27,7 +27,7 @@ elements.Fn('get.inputs', function(node, compile)
     {
         if(attribute.name.startsWith('#'))
         {
-            inputs.wrapper[this.camel(attribute.name.substring(1))] = attribute.value;
+            inputs.wrapper[attribute.name.substring(1)] = attribute.value;
 
             return;
         }
