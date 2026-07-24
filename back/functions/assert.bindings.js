@@ -81,10 +81,26 @@ elements.Fn('assert.bindings', function(file, expressions, render, config)
         });
     };
 
+    this.shaped = (expression) =>
+    {
+        if(expression.name !== ':class' || !/^\s*\{/.test(expression.code))
+        {
+            return;
+        }
+
+        violations.push({
+            rule: 'element',
+            file: file,
+            line: expression.line,
+            message: 'The :class holds an object, that form does not exist, build one string: :class="\'card \' + (open ? \'on\' : \'\')".'
+        });
+    };
+
     this.inspect = (expression) =>
     {
         const code = expression.code.replace(/'[^']*'|"[^"]*"/g, '');
 
+        this.shaped(expression);
         this.writes(expression, code);
 
         for(const match of code.matchAll(/(\.?)\b([A-Za-z_$][\w$]*)\b/g))

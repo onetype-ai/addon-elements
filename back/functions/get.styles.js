@@ -6,6 +6,7 @@ elements.Fn('get.styles', function(text)
 {
     const rules = [];
     const errors = [];
+    const keyframes = [];
     const clean = text
         .replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' '))
         .split('\n')
@@ -63,6 +64,14 @@ elements.Fn('get.styles', function(text)
         if(selector.startsWith('@media'))
         {
             return this.walk(opens + 1, closes);
+        }
+
+        if(selector.startsWith('@keyframes'))
+        {
+            return keyframes.push({
+                name: selector.slice('@keyframes'.length).trim(),
+                line: start
+            });
         }
 
         if(selector.startsWith('@'))
@@ -130,5 +139,5 @@ elements.Fn('get.styles', function(text)
 
     this.walk(0, clean.length);
 
-    return { rules, errors };
+    return { rules, errors, keyframes };
 });

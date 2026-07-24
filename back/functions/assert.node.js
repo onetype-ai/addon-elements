@@ -41,6 +41,13 @@ elements.Fn('assert.node', function(node, report)
     {
         for(const name of node.classes)
         {
+            if(name.startsWith(':'))
+            {
+                report(node.line, 'The class ' + name + ' is a binding inside the static class, dynamic classes ride :class="expression".');
+
+                continue;
+            }
+
             if(!/^[a-z][a-z0-9-]*$/.test(name) || name.length > 10)
             {
                 report(node.line, 'The class ' + name + ' breaks the naming, one lowercase word up to ten characters.');

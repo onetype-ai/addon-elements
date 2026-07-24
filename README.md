@@ -56,7 +56,7 @@ The render returns exactly one template literal of pure html:
 - no `${}` ever, state binds through `{{ }}`, `:attribute` and `ot-*` directives;
 - exactly one root element;
 - no `<script>`, no `<style>`, no inline `style=""`; a truly dynamic value may ride `:style` (a progress width, a computed color), but a constant `:style` is a violation, fixed looks live in classes;
-- classes are one lowercase word up to ten characters, like `box`, `card`, `title`;
+- classes are one lowercase word up to ten characters, like `box`, `card`, `title`; dynamic classes build ONE string through `:class="'card ' + tone"`, an object form does not exist;
 - every static class must appear in the css beside, an unstyled class is a violation.
 
 The css is scoped by the hash of the element. The engine stamps class `e-<hash>` on the wrapper tag, where `hash = GenerateHash('elements-' + id)`:
@@ -75,7 +75,7 @@ Every selector opens with that class and walks down with `>` only:
 - only `>` between steps, never a space, `+` or `~`;
 - every step opens with a class, never a bare tag, an id or `*`;
 - the walked structure must exist in the template, a selector into markup the render does not build is a violation;
-- no `!important`, no `@import`, of the at-rules only `@media` may appear;
+- no `!important`, no `@import`, of the at-rules only `@media` and `@keyframes` may appear, and every keyframes name opens with the hash, `@keyframes e-561166d2-sway`;
 - content injected at runtime through `ot-html` or `ot-node` styles itself, the css of the element cannot reach below such a node.
 
 ## Define an element

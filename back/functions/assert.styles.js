@@ -17,6 +17,19 @@ elements.Fn('assert.styles', function(files, styles, hash, wrapper)
         });
     };
 
+    this.frames = () =>
+    {
+        for(const frame of styles.keyframes)
+        {
+            if(!frame.name.startsWith(hash + '-'))
+            {
+                const lawful = hash + '-' + frame.name;
+
+                this.report(files.css, frame.line, 'The keyframes ' + frame.name + ' float free, animation names open with the hash, ' + lawful + '.');
+            }
+        }
+    };
+
     this.rule = (rule) =>
     {
         if(rule.body.includes('!important'))
@@ -51,6 +64,8 @@ elements.Fn('assert.styles', function(files, styles, hash, wrapper)
 
         node.children.forEach((child) => this.orphans(child));
     };
+
+    this.frames();
 
     styles.rules.forEach((rule) => this.rule(rule));
 
