@@ -19,6 +19,10 @@ onetype.AddonReady('canon.patterns', (patterns) =>
                 required: true,
                 description: 'The addon the element belongs to, its owner.'
             },
+            icon: {
+                type: 'string',
+                description: 'The material icon name of the element.'
+            },
             name: {
                 type: 'string',
                 required: true,
@@ -29,22 +33,46 @@ onetype.AddonReady('canon.patterns', (patterns) =>
                 required: true,
                 description: 'What the element renders, one sentence.'
             },
-            collection: {
-                type: 'string',
-                description: 'Collection the element ships with.'
+            config: {
+                type: 'json',
+                description: 'Defines of the element properties, one define per property.'
             },
             metadata: {
-                type: 'object',
+                type: 'json',
                 description: 'Free tags for whoever wants them.'
             },
-            config: {
-                type: 'object',
-                description: 'Define of the properties the element accepts.'
+            example: {
+                type: 'array',
+                description: 'Example property sets for previews.'
             },
             render: {
                 type: 'function',
                 required: true,
                 description: 'The element body, returns the markup and binds its state.'
+            },
+            visible: {
+                type: 'function',
+                description: 'Runs when the element enters or leaves the viewport, left out when unused.'
+            },
+            resize: {
+                type: 'function',
+                description: 'Runs when the element resizes, left out when unused.'
+            },
+            click: {
+                type: 'function',
+                description: 'Runs when the element is clicked, left out when unused.'
+            },
+            scroll: {
+                type: 'function',
+                description: 'Runs as the element scrolls through the viewport, left out when unused.'
+            },
+            hover: {
+                type: 'function',
+                description: 'Runs as the pointer moves over the element, left out when unused.'
+            },
+            destroy: {
+                type: 'function',
+                description: 'Runs when the element leaves the document, left out when unused.'
             }
         }
     });
