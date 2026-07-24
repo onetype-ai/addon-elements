@@ -11,7 +11,7 @@ onetype.AddonReady('directives', function(directives)
         order: 2500,
         strict: false,
         type: '1',
-        code: function(data, item, compile, node)
+        code: function(data, compile, node)
         {
             if(!node.tagName || !node.tagName.toLowerCase().startsWith('e-') || node.tagName.toLowerCase() === 'e-bind')
             {
@@ -40,7 +40,7 @@ onetype.AddonReady('directives', function(directives)
             }
 
             const inputs = elements.Fn('get.inputs', node, compile);
-            const slots = elements.Fn('get.slots', node, item, compile);
+            const slots = elements.Fn('get.slots', node, compile.render, compile);
 
             this.mount(name, inputs, elements.render(name, inputs.data, inputs.wrapper, slots));
         }
