@@ -24,4 +24,4 @@ elements.FnExpose('mount', function()
     document.addEventListener('DOMContentLoaded', () => this.body());
 
     return null;
-});
+}, 'Renders the whole body as an element, so every tag in a plain page comes alive.');

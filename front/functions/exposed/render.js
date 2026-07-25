@@ -3,4 +3,4 @@
 elements.FnExpose('render', function(name, data = {}, attributes = {}, slots = {})
 {
     return elements.Render(name, data, attributes, slots);
-});
+}, 'Renders a registered element from code and answers the live render instance.');
