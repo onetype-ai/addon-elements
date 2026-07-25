@@ -2,6 +2,8 @@
 
 const elements = onetype.Addon('elements', (addon) =>
 {
+    addon.Description('The element engine, turning a registered render function into live markup wherever its tag stands.');
+
     addon.Field('id', {
         type: 'string',
         description: 'Unique element id, dashes as the tag name, like post-card.'
