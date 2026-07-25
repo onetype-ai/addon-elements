@@ -1,8 +1,8 @@
 // This file is part of OneType. Created and led by Dejan Tomic <hi@iamdejan.com>, co-authored by Stefan Pakic, onetype.ai
 
-elements.Fn('do.render', function()
+elements.FnExpose('mount', function()
 {
-    this.render = () =>
+    this.body = () =>
     {
         elements.Render('body', () =>
         {
@@ -12,14 +12,16 @@ elements.Fn('do.render', function()
         const render = elements.Render('body', window);
 
         document.body.replaceChildren(...render.Element.children);
+
+        return render;
     };
 
-    if(document.readyState === 'loading')
+    if(document.readyState !== 'loading')
     {
-        document.addEventListener('DOMContentLoaded', () => this.render());
-
-        return;
+        return this.body();
     }
 
-    this.render();
+    document.addEventListener('DOMContentLoaded', () => this.body());
+
+    return null;
 });

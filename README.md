@@ -51,6 +51,18 @@ each: {
 ```
 - Data arrays spell their rows riding the brackets, `[{` ... `}, {` ... `}]`, one field per line inside.
 
+## Mounting a plain page
+
+A page that carries elements in its markup and nothing else — a static file, a CDN script — turns them into renders with one call:
+
+```js
+elements.mount();
+```
+
+It renders the whole `<body>` as an element, so every `e-` tag inside becomes live, and returns that render. Called while the document is still parsing it waits for `DOMContentLoaded` and returns `null`; called after, it mounts immediately.
+
+Nothing calls it for you. A page served by `onetype/addon/pages` mounts through its route instead, and an element rendered from code needs no mounting at all — `mount` exists for the page that has no framework around it.
+
 ## Composition and naming
 
 An element renders anywhere as its tag, `e-` + the id: `id: 'lab-sidebar'` mounts as `<e-lab-sidebar>`, from markup or from another element's render. Ids carry their addon as a prefix (`lab-sidebar`, `admin-core-field`) so two addons never clash; the file beside keeps the short tail (`sidebar/sidebar.js`). The `addon` field is a label naming the owner, nothing needs registering anywhere else for an element to exist.
