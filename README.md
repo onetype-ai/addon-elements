@@ -53,7 +53,7 @@ each: {
 
 ## Mounting a plain page
 
-A page that carries elements in its markup and nothing else — a static file, a CDN script — turns them into renders with one call:
+A page that carries elements in its markup and nothing else: a static file, a CDN script: turns them into renders with one call:
 
 ```js
 elements.mount();
@@ -61,7 +61,7 @@ elements.mount();
 
 It renders the whole `<body>` as an element, so every `e-` tag inside becomes live, and returns that render. Called while the document is still parsing it waits for `DOMContentLoaded` and returns `null`; called after, it mounts immediately.
 
-Nothing calls it for you. A page served by `onetype/addon/pages` mounts through its route instead, and an element rendered from code needs no mounting at all — `mount` exists for the page that has no framework around it.
+Nothing calls it for you. A page served by `onetype/addon/pages` mounts through its route instead, and an element rendered from code needs no mounting at all: `mount` exists for the page that has no framework around it.
 
 ## Composition and naming
 
@@ -218,6 +218,24 @@ document.body.appendChild(render.Element);
 ## Templates
 
 Templates speak the directives vocabulary: `{{ value }}` interpolation, `ot-if`, `ot-for`, `ot-click` and the rest, `:attribute` binding, `<slot name>` insertion. When state changes, only the parts that differ re-render; focus, scroll and input state survive.
+
+## What the tests hold it to
+
+With `@onetype/addon-tests` present, seven tests register under `back/items/tests/`:
+
+| Test | Holds |
+| --- | --- |
+| `back/parses` | Reading markup answers the tags, classes, expressions and the nesting that never closed. |
+| `back/styles` | Reading a stylesheet answers every rule with its line, the keyframes and whatever broke. |
+| `back/scopes` | A rule opens on the hash of its element and walks only the structure the template builds. |
+| `back/binds` | A binding reaching for something the config never defined is caught before it renders. |
+| `back/claims` | The pattern, the placement and the two tree paths the addon hands canon all stand. |
+| `front/renders` | An element renders where its tag stands, taking defaults from config and values from attributes. |
+| `front/composes` | Elements nest, take content through slots and multiply over a keyed list. |
+
+Run them with `tests.run('elements')`.
+
+One thing those tests pin down that is easy to trip over: a plain attribute arrives as the string HTML wrote, so a `type: 'number'` property reads its default until the value is bound. `<e-card size="7">` leaves `size` at its default; `<e-card :size="7">` hands it the number. The binding colon is what carries a type across.
 
 ## Guarantees
 

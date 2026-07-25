@@ -17,4 +17,12 @@ import '#elements/back/items/canon/placements/elements.js';
 import '#elements/back/items/canon/tree/elements.js';
 import '#elements/back/items/canon/tree/elements.style.js';
 
+import '#elements/back/items/tests/back/binds.js';
+import '#elements/back/items/tests/back/claims.js';
+import '#elements/back/items/tests/back/parses.js';
+import '#elements/back/items/tests/back/scopes.js';
+import '#elements/back/items/tests/back/styles.js';
+import '#elements/back/items/tests/front/composes.js';
+import '#elements/back/items/tests/front/renders.js';
+
 export default elements;
